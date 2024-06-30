@@ -1,34 +1,39 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link}from "react-router-dom";
 import "./Header.css";
 import {
   Home,
   Add,
-  Search,
+  GroupAddRounded,
+  Chat,
   AccountCircle,
 } from "@mui/icons-material";
 
-export default function  Header () {
-  const navigate = useNavigate();
-  useEffect(()=>{
-    if(!localStorage.getItem('token')){
-      navigate('/login')
-    }
-  })
+export default function Header() {
+
   return (
-    <div className="header">
-      <Link to="/homePost">
-        <Home />
-      </Link>
-      <Link to="/AddPost">
-        <Add />
-      </Link>
-      <Link to="/search">
-        <Search />
-      </Link>
-      <Link to="/profile">
-        <AccountCircle />
-      </Link>
+    <div className="header ">
+      {localStorage.getItem("token") ? (
+        <>
+          <Link to="/homePost">
+            <Home />
+          </Link>
+          <Link to="/Chats">
+            <Chat />
+          </Link>
+          <Link to="/AddPost">
+            <Add />
+          </Link>
+          <Link to="/AddFriends">
+            <GroupAddRounded />
+          </Link>
+          <Link to="/profile">
+            <AccountCircle />
+          </Link>
+        </>
+      ) : (
+        <span />
+      )}
     </div>
   );
 }

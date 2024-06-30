@@ -2,7 +2,8 @@ import User from "../models/userModel.js";
 
 export const addRemoveFriend = async (req, res) => {
   try {
-    const { id, friendId } = req.params;
+    const { friendId } = req.body;
+    const id = req.user._id
     const user = await User.findById(id);
     const friend = await User.findById(friendId);
 
@@ -33,7 +34,7 @@ export const addRemoveFriend = async (req, res) => {
 
 export const getOtherUsers = async (req,res) =>{ 
   try {
-       const {id} = req.params;
+       const {id} = req.body;
        const otherUsers = await User.find({_id:{$ne:id}}).select("-password");
        if(!otherUsers){
           return res.status(401).json({
@@ -50,6 +51,10 @@ export const getOtherUsers = async (req,res) =>{
       })
   }
 }
+
+
+
+
 /*
 export const followUser = async(req,res)=>{
   try {

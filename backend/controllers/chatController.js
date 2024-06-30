@@ -6,7 +6,7 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    const { id: receiverId } = req.params;
+    const { id: receiverId } = req.body;
     const senderId = req.user._id;
 
     let conversation = await Conv.findOne({
@@ -68,13 +68,13 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
-    const { id: userToChatId } = req.params;
+    const userToChatId = req.body.id;
     const senderId = req.user._id;
 
     const conversation = await Conv.findOne({
       participants: { $all: [senderId, userToChatId] },
     }).populate("messages");
-    
+
     if (!conversation) return res.status(500).json([]);
 
     res.status(200).json(conversation.messages);

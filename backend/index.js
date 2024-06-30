@@ -23,13 +23,15 @@ app.use("/api/chat", chatRouter);
 app.use("/api/comlike", clRouter);
 
 //cors
-app.use(cors({
-  origin: "http://localhost:3000",
-  methods: ["GET","POST"],
-  allowedHeaders:{
-    'Access-Control-Allow-Origin': '*'
-  }
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  })
+);
 
 // Database and server Connection
 mongoose.connect(process.env.URI).then(() => {

@@ -1,10 +1,11 @@
 import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
-import mongoose from "mongoose";
+
 
 export const createPost = async (req, res) => {
   try {
-    const { id, image, caption } = req.body;
+    const id = req.user._id;
+    const {image, caption } = req.body;
     if (!id || !image || !caption) {
       res.status(401).json({
         message: "All fields are required",
@@ -78,3 +79,15 @@ export const deletePost = async (req, res) => {
     });
   }
 };
+
+export const getPost = async(req,res) =>{
+  try {
+    const id = req.user._id;
+    const user = await Post.find({ userId: id });
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    })
+  }
+}

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 function Navbar() {
   return (
     <div className="Navbar">
@@ -10,12 +9,25 @@ function Navbar() {
         {/* Container wrapper */}
         <div className="container-fluid">
           {/* Navbar brand */}
+
           {localStorage.getItem("token") ? (
-            <Link className="navbar-brand" to="/AuthorizedUser">
+            <Link className="navbar-brand mx-2" to="/homePost">
+              <img
+                className="navbar-logo"
+                src="./favicon.ico"
+                alt={<span />}
+                style={{ width: "60px" }}
+              />
               Konnect
             </Link>
           ) : (
-            <Link className="navbar-brand" to="/login">
+            <Link className="navbar-brand" to="/">
+              <img
+                className="navbar-logo"
+                src="./favicon.ico"
+                alt={<span />}
+                style={{ width: "60px" }}
+              />
               Konnect
             </Link>
           )}
@@ -35,8 +47,8 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {/* Left links */}
             <div className="leftSide">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+              <div className="navbar-nav me-auto mb-2 mb-lg-0">
+                <div className="nav-item">
                   {localStorage.getItem("token") ? (
                     <span />
                   ) : (
@@ -48,22 +60,29 @@ function Navbar() {
                       Register
                     </Link>
                   )}
-                </li>
+                </div>
 
-                <li className="nav-item">
+                <div className="nav-item">
                   {localStorage.getItem("token") ? (
-                  <Link className="nav-link active" to="/login" onClick={()=>{localStorage.removeItem('token')}}>
-                    Logout
-                  </Link>
+                    <Link
+                      className="nav-link active"
+                      to="/login"
+                      onClick={() => {
+                        localStorage.removeItem("token");
+                        window.location.reload();
+                      }}
+                    >
+                      Logout
+                    </Link>
                   ) : (
                     <Link className="nav-link active" to="/login">
                       Login
                     </Link>
                   )}
-                </li>
+                </div>
 
                 {/* Navbar dropdown */}
-              </ul>
+              </div>
             </div>
             {/* Left links */}
           </div>

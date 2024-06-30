@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export const registerUser = async (req, res) => {
   const { username, email, password, profilePic, bio } = req.body;
@@ -108,3 +109,80 @@ export const getUsersForSidebar = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const getUserDetails = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const currentUser = await User.findOne({ _id: userId });
+    if (!currentUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(currentUser);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+export const getUserId = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const currentUser = await User.findOne({ _id: userId });
+    if (!currentUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(currentUser._id);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+export const addedFriends = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const friends = await User.find({
+      _id: { $in: user.friends },
+    });
+    res.status(200).json({
+      friends,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+/*
+export const getFriendsPosts = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const friends = await User.find({
+      _id: { $in: user.friends },
+    });
+    const friendsPosts = await Promise.all(
+      friends.map(async (friend) => {
+        const posts = await Post.find({ userId: friend._id });
+        return posts;
+      })
+    );
+    res.status(200).json({
+      posts: friendsPosts.flat(),
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+*/

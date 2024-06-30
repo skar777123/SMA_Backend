@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -6,10 +7,39 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState("");
 
+  async function saveImage() {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "SMA_Register");
+    data.append("cloud_name", "dapajcd1d");
+
+    try {
+      if (image === null) {
+        return error.message;
+      }
+
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dapajcd1d/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      const cloudData = await res.json();
+
+      await setUrl(cloudData.url);
+    } catch (error) {
+      setError(error.message);
+      console.log(error);
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const register = { username, email, password, bio };
+    const register = { username, email, password, profilePic: url, bio };
     const response = await fetch("/api/user/register", {
       method: "POST",
       body: JSON.stringify(register),
@@ -18,7 +48,7 @@ export default function Register() {
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
-      alert(error)
+      alert(error);
     }
     if (response.ok) {
       setUsername("");
@@ -26,49 +56,79 @@ export default function Register() {
       setPassword("");
       setBio("");
       setError(null);
-      console.log("new workout added ", json);
+      console.log("new user added ", json);
+      window.location.href = "/login";
     }
   };
 
   return (
-    <div className="Reg ">
-      <form className="form-reg" onSubmit={handleSubmit}>
-        <h2>Registeration Form:</h2>
-        <div>
+    <div className="Reg d-flex justify-content-center my-5 mx-5">
+      <form className="form-reg " onSubmit={handleSubmit}>
+        <h2 style={{ color: "whitesmoke" }}>Registeration Form:</h2>
+
+        <div style={{ color: "white" }}>
+          <label>Upload Profile Pic:</label>
           <input
-            type="text"
-            placeholder="Enter Your Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            className="my-1"
+            type="file"
+            accept="image/*"
+            style={{ borderRadius: "10px", padding: "5px" }}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Enter Your Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter Your Bio"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
+        <>
+          <div>
+            <input
+              className="my-1"
+              type="text"
+              placeholder="Enter Your Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{ borderRadius: "10px", padding: "5px", width: "300px" }}
+            />
+          </div>
+          <div>
+            <input
+              className="my-1"
+              type="text"
+              placeholder="Enter Your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ borderRadius: "10px", padding: "5px", width: "300px" }}
+            />
+          </div>
+          <div>
+            <input
+              className="my-1"
+              type="password"
+              placeholder="Enter Your Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ borderRadius: "10px", padding: "5px", width: "300px" }}
+            />
+          </div>
+          <div>
+            <input
+              className="my-1"
+              type="text"
+              placeholder="Enter Your Bio"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              style={{ borderRadius: "10px", padding: "5px", width: "300px" }}
+            />
+          </div>
+
+          <div>
+            <input
+              className="btn btn-primary my-2"
+              onClick={saveImage}
+              style={{ borderRadius: "10px", padding: "5px" }}
+              type="submit"
+              value="Submit"
+            />
+            <Link to="/login" className="mx-2" style={{color:"whitesmoke"}}>Already have an Account</Link>
+          </div>
+        </>
       </form>
     </div>
   );
