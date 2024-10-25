@@ -9,7 +9,7 @@ export const createPost = async (req, res) => {
     if (!id || !image || !caption) {
       res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(401).json({
         message: "All fields are required",
       });
@@ -36,7 +36,7 @@ export const createPost = async (req, res) => {
     }
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       message: "Post created",
       user,
@@ -78,7 +78,7 @@ export const deletePost = async (req, res) => {
     }
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       message: "Post Deleted",
     });
@@ -95,7 +95,7 @@ export const getPost = async(req,res) =>{
     const user = await Post.find({ userId: id });
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(user)
   } catch (error) {
     res.status(400).json({

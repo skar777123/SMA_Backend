@@ -16,7 +16,7 @@ export const registerUser = async (req, res) => {
     });
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       success: true,
       user,
@@ -46,7 +46,7 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign(tokenData, process.env.JWT_SECRET);
     return res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         )
       .status(201)
       .cookie("token", token, {
@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
 export const logoutUser = (req, res) => {
   return res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).cookie("token", "", { expiresIn: new Date(Date.now()) }).json({
     message: "user logged out successfully.",
     success: true,
@@ -93,7 +93,7 @@ export const forgotPassword = async (req, res) => {
     if (updatePasword) {
       res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
         message: "Password is Changed",
         success: true,
@@ -116,7 +116,7 @@ export const getUsersForSidebar = async (req, res) => {
 
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(filteredUsers);
   } catch (error) {
     console.error("Error in getUsersForSidebar: ", error.message);
@@ -133,7 +133,7 @@ export const getUserDetails = async (req, res) => {
     }
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(currentUser);
   } catch (error) {
     res.status(400).json({
@@ -150,7 +150,7 @@ export const getUserId = async (req, res) => {
     }
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(currentUser._id);
   } catch (error) {
     res.status(400).json({
@@ -171,7 +171,7 @@ export const addedFriends = async (req, res) => {
     });
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       friends,
     });

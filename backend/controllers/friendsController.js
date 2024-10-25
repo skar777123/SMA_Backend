@@ -28,7 +28,7 @@ export const addRemoveFriend = async (req, res) => {
 
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(formattedFriends);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -46,7 +46,7 @@ export const getOtherUsers = async (req,res) =>{
        };
        return res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
           otherUsers
       })

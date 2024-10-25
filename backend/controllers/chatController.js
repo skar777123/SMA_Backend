@@ -62,7 +62,7 @@ export const sendMessage = async (req, res) => {
     res
         .header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller: ", error.message);
@@ -83,7 +83,7 @@ export const getMessages = async (req, res) => {
 
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json(conversation.messages);
   } catch (error) {
     console.log("Error in getMessages controller: ", error.message);

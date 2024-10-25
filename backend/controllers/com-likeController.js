@@ -21,7 +21,7 @@ export const AddComment = async (req, res) => {
     }
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       message: "Comment Added",
       success: true,
@@ -45,7 +45,7 @@ export const Addlikes = async (req, res) => {
       });
       return res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
         message: "User disliked a Post",
       });
@@ -56,7 +56,7 @@ export const Addlikes = async (req, res) => {
       });
       return res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
         message: "User liked a Post.",
       });
@@ -73,7 +73,7 @@ export const getComments = async (req, res) => {
     const comments = await Post.findById(postId);
     res.header(
           "Access-Control-Allow-Origin",
-          "https://scholarship-form-birla-4vuq.vercel.app"
+          "https://sma-backend-z8o1.onrender.com"
         ).status(200).json({
       comments: comments.comments,
     });
