@@ -14,7 +14,10 @@ export const registerUser = async (req, res) => {
       profilePic,
       bio,
     });
-    res.status(200).json({
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
       success: true,
       user,
     });
@@ -41,7 +44,10 @@ export const loginUser = async (req, res) => {
       userId: user._id,
     };
     const token = jwt.sign(tokenData, process.env.JWT_SECRET);
-    return res
+    return res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        )
       .status(201)
       .cookie("token", token, {
         maxAge: 15 * 24 * 60 * 60 * 1000,
