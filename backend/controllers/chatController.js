@@ -59,7 +59,11 @@ export const sendMessage = async (req, res) => {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
-    res.status(201).json(newMessage);
+    res
+        .header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -77,7 +81,10 @@ export const getMessages = async (req, res) => {
 
     if (!conversation) return res.status(500).json([]);
 
-    res.status(200).json(conversation.messages);
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json(conversation.messages);
   } catch (error) {
     console.log("Error in getMessages controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
