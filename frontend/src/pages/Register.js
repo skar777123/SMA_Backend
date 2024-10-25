@@ -8,9 +8,9 @@ export default function Register() {
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
   const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
 
-  async function saveImage() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "SMA_Register");
@@ -31,33 +31,30 @@ export default function Register() {
 
       const cloudData = await res.json();
 
-      await setUrl(cloudData.url);
+
+      const register = { username, email, password, profilePic: cloudData.url, bio };
+      const response = await fetch("/api/user/register", {
+        method: "POST",
+        body: JSON.stringify(register),
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        setError(json.error);
+        alert(error);
+      }
+      if (response.ok) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setBio("");
+        setError(null);
+        console.log("new user added ", json);
+        window.location.href = "/login";
+      }
     } catch (error) {
       setError(error.message);
       console.log(error);
-    }
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const register = { username, email, password, profilePic: url, bio };
-    const response = await fetch("/api/user/register", {
-      method: "POST",
-      body: JSON.stringify(register),
-      headers: { "Content-Type": "application/json" },
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      setError(json.error);
-      alert(error);
-    }
-    if (response.ok) {
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setBio("");
-      setError(null);
-      console.log("new user added ", json);
-      window.location.href = "/login";
     }
   };
 
@@ -121,12 +118,13 @@ export default function Register() {
           <div>
             <input
               className="btn btn-primary my-2"
-              onClick={saveImage}
               style={{ borderRadius: "10px", padding: "5px" }}
               type="submit"
               value="Submit"
             />
-            <Link to="/login" className="mx-2" style={{color:"whitesmoke"}}>Already have an Account</Link>
+            <Link to="/login" className="mx-2" style={{ color: "whitesmoke" }}>
+              Already have an Account
+            </Link>
           </div>
         </>
       </form>
