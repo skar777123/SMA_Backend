@@ -26,7 +26,10 @@ export const addRemoveFriend = async (req, res) => {
       }
     );
 
-    res.status(200).json(formattedFriends);
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json(formattedFriends);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
@@ -41,7 +44,10 @@ export const getOtherUsers = async (req,res) =>{
               message:"Currently do not have any users."
           })
        };
-       return res.status(200).json({
+       return res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
           otherUsers
       })
   } catch (error) {
