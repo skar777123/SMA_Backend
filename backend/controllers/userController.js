@@ -70,7 +70,10 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = (req, res) => {
-  return res.cookie("token", "", { expiresIn: new Date(Date.now()) }).json({
+  return res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).cookie("token", "", { expiresIn: new Date(Date.now()) }).json({
     message: "user logged out successfully.",
     success: true,
   });
@@ -88,7 +91,10 @@ export const forgotPassword = async (req, res) => {
       password: passwordHash,
     });
     if (updatePasword) {
-      res.status(200).json({
+      res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
         message: "Password is Changed",
         success: true,
       });
@@ -108,7 +114,10 @@ export const getUsersForSidebar = async (req, res) => {
       _id: { $ne: loggedInUserId },
     }).select("-password");
 
-    res.status(200).json(filteredUsers);
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json(filteredUsers);
   } catch (error) {
     console.error("Error in getUsersForSidebar: ", error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -122,7 +131,10 @@ export const getUserDetails = async (req, res) => {
     if (!currentUser) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(currentUser);
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json(currentUser);
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -136,7 +148,10 @@ export const getUserId = async (req, res) => {
     if (!currentUser) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(currentUser._id);
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json(currentUser._id);
   } catch (error) {
     res.status(400).json({
       message: error.message,
@@ -154,7 +169,10 @@ export const addedFriends = async (req, res) => {
     const friends = await User.find({
       _id: { $in: user.friends },
     });
-    res.status(200).json({
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
       friends,
     });
   } catch (error) {
