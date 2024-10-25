@@ -19,7 +19,10 @@ export const AddComment = async (req, res) => {
         message: " Failed to add a comment",
       });
     }
-    res.status(200).json({
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
       message: "Comment Added",
       success: true,
     });
@@ -40,7 +43,10 @@ export const Addlikes = async (req, res) => {
       await Post.findByIdAndUpdate(postId, {
         $pull: { type: Array, likes: loggedInUserId },
       });
-      return res.status(200).json({
+      return res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
         message: "User disliked a Post",
       });
     } else {
@@ -48,7 +54,10 @@ export const Addlikes = async (req, res) => {
       await Post.findByIdAndUpdate(postId, {
         $push: { type: Array, likes: loggedInUserId },
       });
-      return res.status(200).json({
+      return res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
         message: "User liked a Post.",
       });
     }
@@ -62,7 +71,10 @@ export const getComments = async (req, res) => {
   try {
     const postId = req.body.id;
     const comments = await Post.findById(postId);
-    res.status(200).json({
+    res.header(
+          "Access-Control-Allow-Origin",
+          "https://scholarship-form-birla-4vuq.vercel.app"
+        ).status(200).json({
       comments: comments.comments,
     });
   } catch (error) {
