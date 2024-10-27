@@ -89,19 +89,23 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const getPost = async(req,res) =>{
+export const getPost = async (req, res) => {
   try {
     const id = req.user._id;
-    const user = await Post.find({ userId: id });
-    const frnds_post = await Post.find({ userId: user.map.friends });
-    console.log(frnds_post);
-    res.header(
-          "Access-Control-Allow-Origin",
-          "https://sma-backend-z8o1.onrender.com"
-        ).status(200).json(user)
+    const main = await Post.find({ userId: id });
+    const user = await User.findById(id).populate("friends");
+    const frndsID = user.friends.map((friend) => friend._id);
+    const frnds_post = await Post.find({ userId: { $in: frndsID } });
+    res
+      .header(
+        "Access-Control-Allow-Origin",
+        "https://sma-backend-z8o1.onrender.com"
+      )
+      .status(200)
+      .json(main.concat(frnds_post));
   } catch (error) {
     res.status(400).json({
       message: error.message,
-    })
+    });
   }
-}
+};
